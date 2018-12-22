@@ -1,26 +1,39 @@
+const path = require('path');
+const nodeExternals = require('webpack-node-externals');
+const {TsConfigPathsPlugin} = require('awesome-typescript-loader');
+
 module.exports = {
-  // モード値を production に設定すると最適化された状態で、
-  // development に設定するとソースマップ有効でJSファイルが出力される
   mode: 'development',
- 
-  // メインとなるJavaScriptファイル（エントリーポイント）
-  entry: './src/main.ts',
- 
+  entry: './src/server.ts',
+  target: 'node',
+  externals: [nodeExternals()],
+  devtool: 'inline-source-map',
+  node: {
+    __filename: true,
+    __dirname: true
+  },
   module: {
     rules: [
       {
-        // 拡張子 .ts の場合
+        loader: 'ts-loader',
         test: /\.ts$/,
-        // TypeScript をコンパイルする
-        use: 'ts-loader'
+        exclude: [
+          /node_modules/
+        ],
+        options: {
+          configFile: 'tsconfig.json'
+        }
       }
     ]
   },
-  // import 文で .ts ファイルを解決するため
   resolve: {
-    extensions: [
-      '.ts'
-    ]
+    plugins: [
+      new TsConfigPathsPlugin()
+    ],
+    extensions: ['.ts', '.js']
+  },
+  output: {
+    filename: 'server.js',
+    path: path.resolve(__dirname, './dist')
   }
-};
-
+}

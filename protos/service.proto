@@ -2,7 +2,7 @@ syntax = "proto3";
 
 package test_user;
 
-service UserService {
+service UserDomain {
     rpc getUsers (UsersRequest) returns (UsersReply);
 }
 

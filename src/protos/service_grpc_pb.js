@@ -27,9 +27,9 @@ function deserialize_test_user_UsersRequest(buffer_arg) {
 }
 
 
-var UserServiceService = exports.UserServiceService = {
+var UserDomainService = exports.UserDomainService = {
   getUsers: {
-    path: '/test_user.UserService/getUsers',
+    path: '/test_user.UserDomain/findUsers',
     requestStream: false,
     responseStream: false,
     requestType: service_pb.UsersRequest,
@@ -41,4 +41,4 @@ var UserServiceService = exports.UserServiceService = {
   },
 };
 
-exports.UserServiceClient = grpc.makeGenericClientConstructor(UserServiceService);
+exports.UserDomainClient = grpc.makeGenericClientConstructor(UserDomainService);
