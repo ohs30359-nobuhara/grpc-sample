@@ -1,6 +1,6 @@
-import { UserDomainClient, IUserDomainClient } from './protos/service_grpc_pb'
+import { UserDomainClient, IUserDomainClient } from './src/protos/service_grpc_pb'
 import { credentials } from 'grpc';
-import {UsersReply, UsersRequest} from './protos/service_pb'
+import {UsersReply, UsersRequest} from './src/protos/service_pb'
 
 
 const client: IUserDomainClient = new UserDomainClient(
