@@ -7,10 +7,10 @@ import { findUsers } from './repository'
  * @param {any} call
  * @param {ServerUnaryCall<UsersRequest>} callback
  */
-export function getUsers(call: ServerUnaryCall<UsersRequest>, callback: any): void {
+export async function getUsers(call: ServerUnaryCall<UsersRequest>, callback: any): Promise<void> {
   const request: UsersRequest = call.request;
 
   const reply: UsersReply = new UsersReply();
-  reply.setUsersList(findUsers(request.getResultcount()));
+  reply.setUsersList(await findUsers(request.getResultcount()));
   callback(null, reply);
 }

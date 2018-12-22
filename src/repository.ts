@@ -1,36 +1,35 @@
 import { User } from './protos/service_pb';
+import { randomUser, IResponse } from './api'
 
 /**
  * generateUser
- * @param {number} index
+ * @param {IResponse} response
+ * @return User[]
  */
-function generateUser(index: number): User {
-  const user: User = new User();
-  user.setEmail(`user${index}@example.com`);
-  user.setFirstname(`hoge`);
-  user.setLastname(`fuga`);
-  user.setSex('male')
+function generateUser(response: IResponse): User[] {
+  return response.results.map(result => {
+    const user: User = new User();
+    user.setFirstname(result.name.first);
+    user.setLastname(result.name.last);
+    user.setSex(result.gender);
+    user.setEmail(result.email);
 
-  const location: User.Location = new User.Location();
-  location.setState('Japan');
-  location.setCiry('Osaka');
-  location.setStreet('xxxxxx');
+    const location: User.Location = new User.Location();
+    location.setState(result.location.street);
+    location.setCiry(result.location.city);
+    location.setStreet(result.location.state);
 
-  user.setLocation(location)
+    user.setLocation(location)
 
-  return user;
+    return user;
+  });
 }
 
 /**
  * findUsers
  * @param {number} resultCount
+ * @return Promise<User[]>
  */
-export function findUsers(resultCount: number): User[] {
-  let users: User[] = [];
-
-  for (let i: number = 0; i < resultCount; i++) {
-    users.push(generateUser(i));
-  }
-
-  return users;
+export async function findUsers(resultCount: number): Promise<User[]> {
+  return generateUser(await randomUser(resultCount));
 }
