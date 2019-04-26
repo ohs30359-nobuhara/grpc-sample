@@ -1,5 +1,6 @@
 import { User } from './protos/service_pb';
 import { randomUser, IResponse } from './api'
+import {InvalidArgumentError} from "./error/invalid_argument";
 
 /**
  * generateUser
@@ -29,7 +30,12 @@ function generateUser(response: IResponse): User[] {
  * findUsers
  * @param {number} resultCount
  * @return Promise<User[]>
+ * @throws InvalidArgumentError
  */
 export async function findUsers(resultCount: number): Promise<User[]> {
+  if (resultCount <= 0) {
+    throw new InvalidArgumentError('Do one or more numbers');
+  }
+
   return generateUser(await randomUser(resultCount));
 }

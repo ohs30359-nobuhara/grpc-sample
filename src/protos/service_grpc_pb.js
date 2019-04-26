@@ -29,7 +29,7 @@ function deserialize_test_user_UsersRequest(buffer_arg) {
 
 var UserDomainService = exports.UserDomainService = {
   getUsers: {
-    path: '/test_user.UserDomain/findUsers',
+    path: '/test_user.UserDomain/getUsers',
     requestStream: false,
     responseStream: false,
     requestType: service_pb.UsersRequest,

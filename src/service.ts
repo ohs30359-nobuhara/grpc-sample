@@ -1,7 +1,7 @@
 import { ServerUnaryCall } from 'grpc';
 import { UsersRequest, UsersReply } from './protos/service_pb';
 import { findUsers } from './repository'
-
+import { status } from 'grpc';
 /**
  * getUsers
  * @param {any} call
@@ -11,6 +11,15 @@ export async function getUsers(call: ServerUnaryCall<UsersRequest>, callback: an
   const request: UsersRequest = call.request;
 
   const reply: UsersReply = new UsersReply();
-  reply.setUsersList(await findUsers(request.getResultcount()));
-  callback(null, reply);
+
+  try {
+    reply.setUsersList(await findUsers(request.getResultcount()));
+    callback(null, reply);
+
+  } catch (e) {
+    callback({
+      message: e.message,
+      code: e.code || status.UNKNOWN
+    });
+  }
 }

@@ -11,7 +11,7 @@ interface IUserDomainService extends grpc.ServiceDefinition<grpc.UntypedServiceI
 }
 
 interface IUserDomainService_IgetUsers extends grpc.MethodDefinition<service_pb.UsersRequest, service_pb.UsersReply> {
-    path: string; // "/test_user.UserDomain/findUsers"
+    path: string; // "/test_user.UserDomain/getUsers"
     requestStream: boolean; // false
     responseStream: boolean; // false
     requestSerialize: grpc.serialize<service_pb.UsersRequest>;

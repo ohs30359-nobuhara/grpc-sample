@@ -9,9 +9,15 @@ const client: IUserDomainClient = new UserDomainClient(
 );
 
 const request: UsersRequest = new UsersRequest();
-request.setResultcount(2);
+request.setResultcount(0);
 
 client.getUsers(request, (err: any, response: UsersReply) => {
+
+  if (err) {
+    console.log(err);
+    return;
+  }
+
   response.getUsersList().forEach(user => {
     console.log(user.toObject());
   })
