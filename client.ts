@@ -1,5 +1,5 @@
 import { UserDomainClient, IUserDomainClient } from './src/protos/service_grpc_pb'
-import { credentials } from 'grpc';
+import { credentials, Metadata } from 'grpc';
 import {UsersReply, UsersRequest} from './src/protos/service_pb'
 
 
@@ -11,7 +11,11 @@ const client: IUserDomainClient = new UserDomainClient(
 const request: UsersRequest = new UsersRequest();
 request.setResultcount(0);
 
-client.getUsers(request, (err: any, response: UsersReply) => {
+// create metaData
+const metaData: Metadata = new Metadata();
+metaData.set('traceId', issueTraceId());
+
+client.getUsers(request, metaData, (err: any, response: UsersReply) => {
 
   if (err) {
     console.log(err);
@@ -23,3 +27,10 @@ client.getUsers(request, (err: any, response: UsersReply) => {
   })
 });
 
+/**
+ * issueTraceId
+ * @return string
+ */
+function issueTraceId(): string {
+  return new Date().getTime() + Math.random().toString(32).substring(2)
+}

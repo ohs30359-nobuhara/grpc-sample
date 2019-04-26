@@ -9,6 +9,7 @@ import { status } from 'grpc';
  */
 export async function getUsers(call: ServerUnaryCall<UsersRequest>, callback: any): Promise<void> {
   const request: UsersRequest = call.request;
+  console.log(call.metadata.getMap());
 
   const reply: UsersReply = new UsersReply();
 
