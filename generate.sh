@@ -11,5 +11,6 @@ protoc \
 --proto_path=./protos/ \
 -I $DIST_DIR \
 -I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+--go_out=plugins=grpc:./gateway/protos \
 --grpc-gateway_out=logtostderr=true:./gateway/protos  \
 ./protos/*.proto

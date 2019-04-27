@@ -3,6 +3,7 @@
 'use strict';
 var grpc = require('grpc');
 var service_pb = require('./service_pb.js');
+var google_api_annotations_pb = require('./google/api/annotations_pb.js');
 
 function serialize_test_user_UsersReply(arg) {
   if (!(arg instanceof service_pb.UsersReply)) {

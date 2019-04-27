@@ -1,9 +1,14 @@
 syntax = "proto3";
+import "google/api/annotations.proto";
 
 package test_user;
 
 service UserDomain {
-    rpc getUsers (UsersRequest) returns (UsersReply);
+    rpc getUsers (UsersRequest) returns (UsersReply) {
+        option(google.api.http) = {
+            get: "/users"
+        };
+    };
 }
 
 // user info
