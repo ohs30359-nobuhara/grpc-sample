@@ -10,4 +10,6 @@ protoc \
 --plugin=protoc-gen-ts="${PLUGIN_TS}" \
 --proto_path=./protos/ \
 -I $DIST_DIR \
+-I$GOPATH/src/github.com/grpc-ecosystem/grpc-gateway/third_party/googleapis \
+--grpc-gateway_out=logtostderr=true:./gateway/protos  \
 ./protos/*.proto
