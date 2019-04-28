@@ -14,3 +14,6 @@ protoc \
 --go_out=plugins=grpc:./gateway/protos \
 --grpc-gateway_out=logtostderr=true:./gateway/protos  \
 ./protos/*.proto
+
+# remove javascript require ('./annotations_pb')
+find src/protos  -exec sed -i '' -e '/annotations_pb/d' {} \;
