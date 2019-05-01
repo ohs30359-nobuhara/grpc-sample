@@ -1,0 +1,45 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: deployment-grpc-sample
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grpc-sample
+  template:
+    metadata:
+      labels:
+        app: grpc-sample
+    spec:
+      volumes:
+      - name: envoy-config
+        configMap:
+          name: envoy-config
+
+      containers:
+      - name: grpc-sample
+        image: ohs30359/grpc-sample
+        ports:
+        - containerPort: 8080
+        env:
+        - name: HOST
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+
+      - name: envoy
+        image: envoyproxy/envoy:latest
+        volumeMounts:
+        - name: envoy-config
+          mountPath: /etc/envoy/
+        command:
+        - "/usr/local/bin/envoy"
+        args:
+        - "--config-path /etc/envoy/envoy.yaml"
+        ports:
+        - containerPort: 15001
+          name: proxy
+        - containerPort: 9999
+          name: envoy-admin
+

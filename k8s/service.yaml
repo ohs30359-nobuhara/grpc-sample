@@ -1,0 +1,26 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-grpc-sample
+spec:
+  type: ClusterIP
+  clusterIP: None
+  ports:
+  - port: 10000
+    #targetPort: 80
+    targetPort: 15001
+  selector:
+    app: grpc-sample
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-grpc-sample-external
+spec:
+  type: NodePort
+  ports:
+  - port: 8080
+    targetPort: 15001
+  selector:
+    app: grpc-sample

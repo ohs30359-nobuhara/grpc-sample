@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ingress-grpc-sample
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    nginx.ingress.kubernetes.io/ssl-redirect: true
+    nginx.ingress.kubernetes.io/backend-protocol: GRPC
+
+spec:
+  backend:
+    serviceName: service-grpc-sample
+    servicePort: 10000
+
