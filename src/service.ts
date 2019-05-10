@@ -1,6 +1,6 @@
 import { ServerUnaryCall } from 'grpc';
-import { UsersRequest, UsersReply } from './protos/service_pb';
-import { findUsers } from './repository'
+import {UsersRequest, UsersReply, User} from './protos/service_pb';
+// import { findUsers } from './repository'
 import { status } from 'grpc';
 /**
  * getUsers
@@ -8,13 +8,14 @@ import { status } from 'grpc';
  * @param {ServerUnaryCall<UsersRequest>} callback
  */
 export async function getUsers(call: ServerUnaryCall<UsersRequest>, callback: any): Promise<void> {
-  const request: UsersRequest = call.request;
+  // const request: UsersRequest = call.request;
   console.log(call.metadata.getMap());
 
   const reply: UsersReply = new UsersReply();
 
   try {
-    reply.setUsersList(await findUsers(request.getResultcount()));
+    // reply.setUsersList(await findUsers(request.getResultcount()));
+    reply.setUsersList([dummy()]);
     callback(null, reply);
 
   } catch (e) {
@@ -23,4 +24,17 @@ export async function getUsers(call: ServerUnaryCall<UsersRequest>, callback: an
       code: e.code || status.UNKNOWN
     });
   }
+}
+
+/**
+ * Temporary processing for load test ...
+ */
+function dummy(): User {
+  const user: User = new User();
+  user.setFirstname('dummy');
+  user.setLastname('dummy');
+  user.setSex('male');
+  user.setEmail('dummy@sample.com');
+
+  return user;
 }

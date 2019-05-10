@@ -4,12 +4,12 @@ import {UsersReply, UsersRequest} from './src/protos/service_pb'
 
 
 const client: IUserDomainClient = new UserDomainClient(
-  `0.0.0.0:51001`,
+  `0.0.0.0:50051`,
   credentials.createInsecure()
 );
 
 const request: UsersRequest = new UsersRequest();
-request.setResultcount(0);
+request.setResultcount(1);
 
 // create metaData
 const metaData: Metadata = new Metadata();
